@@ -45,10 +45,44 @@ export class GitHubClient {
     return response.json();
   }
 
+  async listUserRepositories(prefix: string): Promise<GitHubRepo[]> {
+    try {
+      const repos = await this.request('/user/repos?type=all&per_page=100');
+      return repos.filter((repo: GitHubRepo) => repo.name.startsWith(prefix));
+    } catch (error) {
+      throw new Error(`Failed to list user repositories: ${error}`);
+    }
+  }
+
   async listRepositoriesByOrg(orgName: string, prefix: string): Promise<GitHubRepo[]> {
     try {
       const repos = await this.request(`/orgs/${orgName}/repos?type=all&per_page=100`);
       return repos.filter((repo: GitHubRepo) => repo.name.startsWith(prefix));
+    } catch (error) {
+      throw new Error(`Failed to list organization repositories: ${error}`);
+    }
+  }
+
+  async listRepositoriesByOrgAndUser(orgName: string, prefix: string): Promise<GitHubRepo[]> {
+    try {
+      // Fetch organization repos
+      const orgRepos = await this.listRepositoriesByOrg(orgName, prefix);
+
+      // Fetch user personal repos
+      const userRepos = await this.listUserRepositories(prefix);
+
+      // Merge and remove duplicates (by full_name)
+      const merged = new Map<string, GitHubRepo>();
+
+      orgRepos.forEach((repo) => {
+        merged.set(repo.full_name, repo);
+      });
+
+      userRepos.forEach((repo) => {
+        merged.set(repo.full_name, repo);
+      });
+
+      return Array.from(merged.values());
     } catch (error) {
       throw new Error(`Failed to list repositories: ${error}`);
     }

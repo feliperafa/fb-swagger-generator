@@ -122,7 +122,7 @@ export default function ConfigForm({ onSubmit, isLoading }: ConfigFormProps) {
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
           <p className="text-xs text-gray-500 mt-1">
-            Will find all repos starting with this prefix (e.g., fb-srv, fb-bff)
+            Will find all repos (organization + personal) starting with this prefix (e.g., fb-srv, fb-bff)
           </p>
         </div>
 

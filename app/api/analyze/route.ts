@@ -54,8 +54,8 @@ export async function POST(request: NextRequest) {
     // Initialize GitHub client
     const githubClient = new GitHubClient(githubToken);
 
-    // List repositories
-    const repos = await githubClient.listRepositoriesByOrg(orgName, teamPrefix);
+    // List repositories (both organization and user personal repos)
+    const repos = await githubClient.listRepositoriesByOrgAndUser(orgName, teamPrefix);
 
     if (repos.length === 0) {
       return NextResponse.json(
