@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ParserResult } from '@/app/types';
+import { generatePostmanCollection, generateInsomniaCollection } from '@/app/lib/collectionGenerator';
 
 interface ResultsViewProps {
   result: ParserResult;
@@ -64,6 +65,38 @@ export default function ResultsView({ result, onNewAnalysis }: ResultsViewProps)
     }
   };
 
+  const downloadPostman = () => {
+    if (!result.data) return;
+
+    const collection = generatePostmanCollection(result.data);
+    const dataStr = JSON.stringify(collection, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `postman-collection-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadInsomnia = () => {
+    if (!result.data) return;
+
+    const collection = generateInsomniaCollection(result.data);
+    const dataStr = JSON.stringify(collection, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `insomnia-export-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   if (result.status === 'error') {
     return (
       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6">
@@ -120,6 +153,18 @@ export default function ResultsView({ result, onNewAnalysis }: ResultsViewProps)
           className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
         >
           ⬇️ Download YAML
+        </button>
+        <button
+          onClick={downloadPostman}
+          className="px-5 py-2.5 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
+        >
+          🟠 Download Postman
+        </button>
+        <button
+          onClick={downloadInsomnia}
+          className="px-5 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
+        >
+          🟣 Download Insomnia
         </button>
         <button
           onClick={copyToClipboard}
