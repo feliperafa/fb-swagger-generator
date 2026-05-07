@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Rename-Item -Path \"C:\\\\Users\\\\felip\\\\Videos\\\\estudos\\\\pupj-swagger-generator\" -NewName \"fb-swagger-generator\" -Force)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
