@@ -65,19 +65,35 @@ export class GitHubClient {
 
   async listRepositoriesByOrgAndUser(orgName: string, prefix: string): Promise<GitHubRepo[]> {
     try {
-      // Fetch organization repos
-      const orgRepos = await this.listRepositoriesByOrg(orgName, prefix);
-
-      // Fetch user personal repos
-      const userRepos = await this.listUserRepositories(prefix);
-
       // Merge and remove duplicates (by full_name)
       const merged = new Map<string, GitHubRepo>();
 
-      orgRepos.forEach((repo) => {
-        merged.set(repo.full_name, repo);
-      });
+      // Try to fetch organization repos (might fail if it's a user, not an org)
+      let orgRepos: GitHubRepo[] = [];
+      try {
+        orgRepos = await this.listRepositoriesByOrg(orgName, prefix);
+        orgRepos.forEach((repo) => {
+          merged.set(repo.full_name, repo);
+        });
+      } catch (orgError) {
+        // If org doesn't exist, try as a user instead
+        try {
+          const userOrgRepos = await this.request(`/users/${orgName}/repos?type=all&per_page=100`);
+          userOrgRepos
+            .filter((repo: GitHubRepo) => repo.name.startsWith(prefix))
+            .forEach((repo: GitHubRepo) => {
+              merged.set(repo.full_name, repo);
+            });
+        } catch {
+          // Neither org nor user found
+          throw new Error(
+            `Organization or user "${orgName}" not found. Make sure the URL is correct (e.g., https://github.com/my-org or https://github.com/my-username)`
+          );
+        }
+      }
 
+      // Always fetch user's personal repos
+      const userRepos = await this.listUserRepositories(prefix);
       userRepos.forEach((repo) => {
         merged.set(repo.full_name, repo);
       });
