@@ -49,14 +49,14 @@ export default function ConfigForm({ onSubmit, isLoading }: ConfigFormProps) {
 
   if (!session) {
     return (
-      <div className="bg-white rounded-lg shadow p-6 text-center">
-        <h2 className="text-2xl font-bold mb-4">Welcome</h2>
-        <p className="text-gray-600 mb-6">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 p-8 text-center">
+        <h2 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">Welcome</h2>
+        <p className="text-slate-600 dark:text-slate-300 mb-8 text-lg">
           Sign in with your GitHub account to get started.
         </p>
         <button
           onClick={() => signIn('github')}
-          className="px-6 py-3 bg-gray-800 text-white rounded-md hover:bg-gray-900 font-medium inline-flex items-center gap-2"
+          className="px-8 py-3 bg-gradient-to-r from-slate-900 to-slate-700 hover:from-slate-800 hover:to-slate-600 dark:from-slate-700 dark:to-slate-600 dark:hover:from-slate-600 dark:hover:to-slate-500 text-white rounded-lg font-semibold inline-flex items-center gap-3 shadow-lg hover:shadow-xl transition-all duration-200"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path
@@ -72,29 +72,29 @@ export default function ConfigForm({ onSubmit, isLoading }: ConfigFormProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold">Configuration</h2>
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-600">
+    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 p-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Configuration</h2>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          <span className="text-sm text-slate-600 dark:text-slate-300">
             Signed in as{' '}
-            <span className="font-semibold text-gray-900">
+            <span className="font-semibold text-slate-900 dark:text-white">
               {session.user?.name || session.user?.email}
             </span>
           </span>
           <button
             onClick={() => signOut()}
-            className="text-sm text-red-600 hover:text-red-700 font-medium"
+            className="text-sm text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 font-medium transition-colors"
           >
             Sign out
           </button>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Organization URL */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
             Organization GitHub URL *
           </label>
           <input
@@ -102,16 +102,16 @@ export default function ConfigForm({ onSubmit, isLoading }: ConfigFormProps) {
             value={config.orgUrl}
             onChange={(e) => handleConfigChange('orgUrl', e.target.value)}
             placeholder="https://github.com/your-org"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-3 border border-slate-200 dark:border-slate-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white text-slate-900 placeholder-slate-400 dark:placeholder-slate-500 transition-all"
           />
-          <p className="text-xs text-gray-500 mt-1">
-            Example: https://github.com/my-company
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+            Example: https://github.com/my-company or https://github.com/your-username
           </p>
         </div>
 
         {/* Team Prefix */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
             Team Repository Prefix *
           </label>
           <input
@@ -119,9 +119,9 @@ export default function ConfigForm({ onSubmit, isLoading }: ConfigFormProps) {
             value={config.teamPrefix}
             onChange={(e) => handleConfigChange('teamPrefix', e.target.value)}
             placeholder="fb"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-3 border border-slate-200 dark:border-slate-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white text-slate-900 placeholder-slate-400 dark:placeholder-slate-500 transition-all"
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
             Will find all repos (organization + personal) starting with this prefix (e.g., fb-srv, fb-bff)
           </p>
         </div>
@@ -130,9 +130,19 @@ export default function ConfigForm({ onSubmit, isLoading }: ConfigFormProps) {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400 font-medium"
+          className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-slate-400 disabled:to-slate-500 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl disabled:shadow-none transition-all duration-200"
         >
-          {isLoading ? 'Analyzing Repositories...' : 'Analyze Repositories'}
+          {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Analyzing Repositories...
+            </span>
+          ) : (
+            'Analyze Repositories'
+          )}
         </button>
       </form>
     </div>

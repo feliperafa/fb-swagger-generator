@@ -43,14 +43,16 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-100 dark:from-slate-950 dark:via-slate-900 dark:to-purple-950 py-16 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            📚 FB Swagger Generator
-          </h1>
-          <p className="text-gray-600">
+        <div className="mb-12 text-center">
+          <div className="inline-block mb-4">
+            <h1 className="text-5xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-3">
+              FB Swagger Generator
+            </h1>
+          </div>
+          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Automatically generate Swagger/OpenAPI documentation from your Java microservices
           </p>
         </div>
@@ -64,22 +66,25 @@ export default function Home() {
 
         {/* Features Info */}
         {!result && (
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white rounded-lg shadow p-4">
-              <h3 className="font-semibold text-gray-900 mb-2">🔍 Smart Detection</h3>
-              <p className="text-gray-600 text-sm">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6 border border-slate-100 dark:border-slate-700">
+              <div className="text-3xl mb-3">🔍</div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Smart Detection</h3>
+              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                 Automatically detects Java controllers and REST endpoints
               </p>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <h3 className="font-semibold text-gray-900 mb-2">📦 Multi-Repository</h3>
-              <p className="text-gray-600 text-sm">
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6 border border-slate-100 dark:border-slate-700">
+              <div className="text-3xl mb-3">📦</div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Multi-Repository</h3>
+              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                 Analyzes multiple repositories matching your team prefix
               </p>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <h3 className="font-semibold text-gray-900 mb-2">💾 Multiple Formats</h3>
-              <p className="text-gray-600 text-sm">
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6 border border-slate-100 dark:border-slate-700">
+              <div className="text-3xl mb-3">💾</div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Multiple Formats</h3>
+              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                 Export as JSON or YAML for Insomnia, Postman, and more
               </p>
             </div>
@@ -87,7 +92,7 @@ export default function Home() {
         )}
 
         {/* Footer */}
-        <footer className="mt-12 text-center text-gray-600 text-sm">
+        <footer className="mt-16 text-center text-slate-600 dark:text-slate-400 text-sm">
           <p>Version 1.0.0 • Generated Swagger is compatible with Insomnia & Postman</p>
         </footer>
       </div>
