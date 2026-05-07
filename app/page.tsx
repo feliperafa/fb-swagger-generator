@@ -89,15 +89,6 @@ export default function Home() {
         {/* Footer */}
         <footer className="mt-12 text-center text-gray-600 text-sm">
           <p>Version 1.0.0 • Generated Swagger is compatible with Insomnia & Postman</p>
-          <button
-            onClick={() => window.location.href = 'https://github.com/feliperafa/fb-swagger-generator/archive/refs/heads/master.zip'}
-            className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-sm bg-gray-800 text-white rounded hover:bg-gray-900"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m-7-7h14" />
-            </svg>
-            Download Repository
-          </button>
         </footer>
       </div>
     </main>
