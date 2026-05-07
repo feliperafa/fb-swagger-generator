@@ -60,10 +60,17 @@ export interface OpenAPISpec {
   };
 }
 
+// Repository Summary (for API response)
+export interface RepositorySummary {
+  name: string;
+  endpoints: number;
+  hasExistingSwagger: boolean;
+}
+
 // Parser Result
 export interface ParserResult {
   status: 'success' | 'error' | 'loading';
   message: string;
   data?: OpenAPISpec;
-  repositories?: RepositoryAnalysis[];
+  repositories?: RepositorySummary[];
 }
