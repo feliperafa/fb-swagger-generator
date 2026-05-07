@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { OpenAPISpec, ParserResult } from '@/app/types';
+import { useState } from 'react';
+import { ParserResult } from '@/app/types';
 
 interface ResultsViewProps {
   result: ParserResult;
@@ -93,10 +93,10 @@ export default function ResultsView({ result, onNewAnalysis }: ResultsViewProps)
           <h3 className="text-blue-800 font-semibold mb-3">Summary</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {result.repositories.map((repo) => (
-              <div key={repo.name} className="bg-white rounded p-3">
-                <p className="text-sm font-medium text-gray-900">{repo.name}</p>
+              <div key={repo.repo.name} className="bg-white rounded p-3">
+                <p className="text-sm font-medium text-gray-900">{repo.repo.name}</p>
                 <p className="text-sm text-gray-600">
-                  {repo.endpoints} {repo.endpoints === 1 ? 'endpoint' : 'endpoints'}
+                  {repo.endpoints.length} {repo.endpoints.length === 1 ? 'endpoint' : 'endpoints'}
                 </p>
                 {repo.hasExistingSwagger && (
                   <p className="text-xs text-blue-600 mt-1">✓ Has existing Swagger</p>
@@ -147,7 +147,7 @@ export default function ResultsView({ result, onNewAnalysis }: ResultsViewProps)
                 </span>
               </button>
 
-              {expandedRepos.has(tag.name) && (
+              {expandedRepos.has(tag.name) && result.data && (
                 <div className="p-4 space-y-3">
                   {Object.entries(result.data.paths || {}).map(([path, pathItem]: [string, any]) => {
                     const methods = Object.entries(pathItem)
@@ -158,7 +158,7 @@ export default function ResultsView({ result, onNewAnalysis }: ResultsViewProps)
 
                     return (
                       <div key={path}>
-                        {methods.map(([method, operation]: [string, any]) => (
+                        {methods.map(([method]: [string, any]) => (
                           <div key={`${path}-${method}`} className="flex items-center gap-3 p-2 bg-gray-50 rounded">
                             <span className={`px-2 py-1 rounded text-white text-xs font-semibold ${getMethodColor(method)}`}>
                               {method.toUpperCase()}
