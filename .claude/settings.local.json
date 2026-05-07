@@ -9,7 +9,8 @@
       "Bash(Remove-Item -Path \".next\" -Recurse -Force -ErrorAction SilentlyContinue)",
       "Bash(npm run *)",
       "Bash(git push *)",
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "Bash(npm install *)"
     ]
   }
 }

@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/lib/auth';
 import { GitHubClient } from '@/app/lib/github';
 import { JavaControllerParser } from '@/app/lib/javaParser';
 import { OpenAPIGenerator } from '@/app/lib/openAPIGenerator';
@@ -8,18 +10,32 @@ export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { githubToken, orgUrl, teamPrefix } = body;
-
-    if (!githubToken || !orgUrl || !teamPrefix) {
+    // Get token from session
+    const session = await getServerSession(authOptions);
+    if (!session?.accessToken) {
       return NextResponse.json(
         {
           status: 'error',
-          message: 'Missing required fields: githubToken, orgUrl, teamPrefix',
+          message: 'Unauthorized: Please sign in with GitHub first',
+        },
+        { status: 401 }
+      );
+    }
+
+    const body = await request.json();
+    const { orgUrl, teamPrefix } = body;
+
+    if (!orgUrl || !teamPrefix) {
+      return NextResponse.json(
+        {
+          status: 'error',
+          message: 'Missing required fields: orgUrl, teamPrefix',
         },
         { status: 400 }
       );
     }
+
+    const githubToken = session.accessToken;
 
     // Extract organization name from URL
     const orgMatch = orgUrl.match(/github\.com\/([^/]+)\/?$/);

@@ -40,7 +40,6 @@ export interface RepositoryAnalysis {
 
 // Configuration
 export interface AppConfig {
-  githubToken: string;
   orgUrl: string;
   teamPrefix: string;
 }
