@@ -1,4 +1,4 @@
-# 📊 PUPJ Swagger Generator - Sumário do Projeto
+# 📊 FB Swagger Generator - Sumário do Projeto
 
 ## ✅ Que Foi Construído
 

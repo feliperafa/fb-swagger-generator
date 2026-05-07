@@ -1,9 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(Rename-Item -Path \"C:\\\\Users\\\\felip\\\\Videos\\\\estudos\\\\pupj-swagger-generator\" -NewName \"fb-swagger-generator\" -Force)",
+      "PowerShell(Rename-Item -Path \"C:\\\\Users\\\\felip\\\\Videos\\\\estudos\\\\fb-swagger-generator\" -NewName \"fb-swagger-generator\" -Force)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Read(//c/Users/felip/Videos/estudos/**)",
+      "Bash(mv fb-swagger-generator *)",
+      "Bash(Remove-Item -Path \".next\" -Recurse -Force -ErrorAction SilentlyContinue)",
+      "Bash(npm run *)"
     ]
   }
 }

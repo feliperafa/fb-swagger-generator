@@ -1,4 +1,4 @@
-# 🚀 Quick Start - PUPJ Swagger Generator
+# 🚀 Quick Start - FB Swagger Generator
 
 ## 1️⃣ Preparar Ambiente
 
@@ -19,7 +19,7 @@ Acesse: **http://localhost:3000**
 
 1. Vá para https://github.com/settings/tokens
 2. Clique em "Generate new token" → "Generate new token (classic)"
-3. Nomeie: `pupj-swagger-gen` (opcional)
+3. Nomeie: `fb-swagger-gen` (opcional)
 4. Selecione permissão: `repo` (acesso completo)
 5. Gere e **copie o token** (você não verá novamente!)
 

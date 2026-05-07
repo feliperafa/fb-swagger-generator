@@ -21,7 +21,7 @@ export default function ConfigForm({ onSubmit, isLoading }: ConfigFormProps) {
 
   // Load saved config from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem('pupj-config');
+    const saved = localStorage.getItem('fb-config');
     if (saved) {
       try {
         setConfig(JSON.parse(saved));
@@ -35,7 +35,7 @@ export default function ConfigForm({ onSubmit, isLoading }: ConfigFormProps) {
   const handleConfigChange = (field: keyof AppConfig, value: string) => {
     const newConfig = { ...config, [field]: value };
     setConfig(newConfig);
-    localStorage.setItem('pupj-config', JSON.stringify(newConfig));
+    localStorage.setItem('fb-config', JSON.stringify(newConfig));
     setTokenValid(null);
     setTokenValidError('');
   };

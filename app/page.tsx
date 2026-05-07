@@ -48,7 +48,7 @@ export default function Home() {
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            📚 PUPJ Swagger Generator
+            📚 FB Swagger Generator
           </h1>
           <p className="text-gray-600">
             Automatically generate Swagger/OpenAPI documentation from your Java microservices
