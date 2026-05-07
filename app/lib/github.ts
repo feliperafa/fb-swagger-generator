@@ -20,7 +20,26 @@ export class GitHubClient {
     });
 
     if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.statusText}`);
+      let errorMessage = `GitHub API error: ${response.status} ${response.statusText}`;
+
+      if (response.status === 401) {
+        errorMessage = 'Unauthorized: Token is invalid or expired. Check your GitHub token.';
+      } else if (response.status === 403) {
+        errorMessage = 'Forbidden: Your token does not have permission to access this resource. This may be a corporate repo requiring additional authentication (SAML/SSO).';
+      } else if (response.status === 404) {
+        errorMessage = 'Not found: Organization or repository does not exist.';
+      }
+
+      try {
+        const body = await response.json();
+        if (body.message) {
+          errorMessage = `${errorMessage} - ${body.message}`;
+        }
+      } catch {
+        // Response is not JSON, use default error message
+      }
+
+      throw new Error(errorMessage);
     }
 
     return response.json();

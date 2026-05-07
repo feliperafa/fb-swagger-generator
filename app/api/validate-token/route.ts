@@ -19,7 +19,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Test the token by making a simple API call
-    const client = new GitHubClient(githubToken);
     const response = await fetch('https://api.github.com/user', {
       headers: {
         Authorization: `token ${githubToken}`,
@@ -28,12 +27,29 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
+      let errorMessage = 'Invalid GitHub token';
+
+      if (response.status === 401) {
+        errorMessage = 'Token is invalid or expired. Please check your GitHub token.';
+      } else if (response.status === 403) {
+        errorMessage = 'Token does not have required permissions. For corporate repos, you may need a token with specific SAML/SSO permissions, or the token may lack repository access.';
+      }
+
+      try {
+        const errorData = await response.json();
+        if (errorData.message) {
+          errorMessage = `${errorMessage} (${errorData.message})`;
+        }
+      } catch {
+        // Response is not JSON
+      }
+
       return NextResponse.json(
         {
           status: 'error',
-          message: 'Invalid GitHub token',
+          message: errorMessage,
         },
-        { status: 401 }
+        { status: response.status }
       );
     }
 
